@@ -131,14 +131,28 @@ class DashBoardWrapper extends React.Component {
     super(props);
     this.state = {
       currentScreen: 0,
+      timer: null,
     };
   };
+
+  componentDidMount() {
+    let timer = setInterval(this.tick.bind(this), 10000);
+    this.setState({timer});
+  }
+  componentWillUnmount() {
+    this.clearInterval(this.state.timer);
+  }
 
   rotateScreen() {
     this.setState({
       currentScreen: (this.state.currentScreen + 1) % DASHBOARDS.length,
     }, console.log(this.state.currentScreen));
   }
+
+  tick() {
+    this.rotateScreen();
+  }
+
 
   render() {
     return (

@@ -123,17 +123,34 @@ var DashBoardWrapper = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (DashBoardWrapper.__proto__ || Object.getPrototypeOf(DashBoardWrapper)).call(this, props));
 
     _this.state = {
-      currentScreen: 0
+      currentScreen: 0,
+      timer: null
     };
     return _this;
   }
 
   _createClass(DashBoardWrapper, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var timer = setInterval(this.tick.bind(this), 10000);
+      this.setState({ timer: timer });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.clearInterval(this.state.timer);
+    }
+  }, {
     key: 'rotateScreen',
     value: function rotateScreen() {
       this.setState({
         currentScreen: (this.state.currentScreen + 1) % DASHBOARDS.length
       }, console.log(this.state.currentScreen));
+    }
+  }, {
+    key: 'tick',
+    value: function tick() {
+      this.rotateScreen();
     }
   }, {
     key: 'render',
