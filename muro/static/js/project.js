@@ -20,12 +20,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var DASHBOARDS = [{
-  id: 1,
+  id: 0,
   rows: [{
     cols: [{
       tiles: [{
         color: '#00f',
-        image: 'https://placekitten.com/500/502'
+        image: 'https://placekitten.com/500/502',
+        iframe: 'http://mbl.is'
       }]
     }, {
       tiles: [{
@@ -35,7 +36,7 @@ var DASHBOARDS = [{
     }]
   }]
 }, {
-  id: 2,
+  id: 1,
   rows: [{
     cols: [{
       tiles: [{
@@ -52,12 +53,13 @@ var DASHBOARDS = [{
     cols: [{
       tiles: [{
         color: '#00f',
-        image: 'https://placekitten.com/400/430'
+        image: 'https://placekitten.com/400/430',
+        iframe: 'http://visir.is'
       }]
     }]
   }]
 }, {
-  id: 3,
+  id: 2,
   rows: [{
     cols: [{
       tiles: [{
@@ -73,13 +75,17 @@ var DashBoardCol = function DashBoardCol(props) {
     'div',
     { className: 'db-col' },
     props.tiles.map(function (tile) {
-      return _react2.default.createElement('div', {
-        className: 'db-tile',
-        style: {
-          backgroundColor: tile.color,
-          backgroundImage: 'url("' + tile.image + '")'
-        }
-      });
+      return _react2.default.createElement(
+        'div',
+        {
+          className: 'db-tile',
+          style: {
+            backgroundColor: tile.color,
+            backgroundImage: 'url("' + tile.image + '")'
+          }
+        },
+        tile.iframe ? _react2.default.createElement('iframe', { src: tile.iframe, width: '100%', height: '100%' }) : ''
+      );
     })
   );
 };
@@ -99,7 +105,7 @@ var DashBoardRow = function DashBoardRow(props) {
 var DashBoard = function DashBoard(props) {
   return _react2.default.createElement(
     'div',
-    { className: 'db' },
+    { className: 'db' + (props.currentScreen === props.db.id ? '' : ' hidden') },
     props.db.rows.map(function (row) {
       return _react2.default.createElement(DashBoardRow, {
         cols: row.cols
@@ -116,9 +122,6 @@ var DashBoardWrapper = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DashBoardWrapper.__proto__ || Object.getPrototypeOf(DashBoardWrapper)).call(this, props));
 
-    _this.dashboards = DASHBOARDS.map(function (db) {
-      return _react2.default.createElement(DashBoard, { db: db });
-    });
     _this.state = {
       currentScreen: 0
     };
@@ -129,8 +132,8 @@ var DashBoardWrapper = function (_React$Component) {
     key: 'rotateScreen',
     value: function rotateScreen() {
       this.setState({
-        currentScreen: (this.state.currentScreen + 1) % this.dashboards.length
-      });
+        currentScreen: (this.state.currentScreen + 1) % DASHBOARDS.length
+      }, console.log(this.state.currentScreen));
     }
   }, {
     key: 'render',
@@ -142,7 +145,13 @@ var DashBoardWrapper = function (_React$Component) {
         { className: 'db-wrapper', onClick: function onClick() {
             return _this2.rotateScreen();
           } },
-        this.dashboards[this.state.currentScreen]
+        DASHBOARDS.map(function (db) {
+          return _react2.default.createElement(DashBoard, {
+            db: db,
+            currentScreen: _this2.state.currentScreen
+          });
+        }),
+        ';'
       );
     }
   }]);

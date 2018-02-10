@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 const DASHBOARDS = [
   {
-    id: 1,
+    id: 0,
     rows: [
       {
         cols: [
@@ -13,6 +13,7 @@ const DASHBOARDS = [
               {
                 color: '#00f',
                 image: 'https://placekitten.com/500/502',
+                iframe: 'http://mbl.is',
               },
             ],
           },
@@ -29,7 +30,7 @@ const DASHBOARDS = [
     ],
   },
   {
-    id: 2,
+    id: 1,
     rows: [
       {
         cols: [
@@ -58,6 +59,7 @@ const DASHBOARDS = [
               {
                 color: '#00f',
                 image: 'https://placekitten.com/400/430',
+                iframe: 'http://visir.is',
               },
             ],
           },
@@ -66,7 +68,7 @@ const DASHBOARDS = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     rows: [
       {
         cols: [
@@ -94,7 +96,9 @@ const DashBoardCol = (props) => (
           backgroundColor: tile.color,
           backgroundImage: 'url("' + tile.image + '")',
         }}
-      />
+      >
+        { tile.iframe ? <iframe src={tile.iframe} width="100%" height="100%" /> : '' }
+      </div>
     ))}
   </div>
 );
@@ -112,7 +116,7 @@ const DashBoardRow = (props) => (
 
 
 const DashBoard = (props) => (
-  <div className="db">
+  <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
     { props.db.rows.map(row => (
       <DashBoardRow
         cols={row.cols}
@@ -125,9 +129,6 @@ const DashBoard = (props) => (
 class DashBoardWrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.dashboards = DASHBOARDS.map(db => {
-      return <DashBoard db={db} />;
-    });
     this.state = {
       currentScreen: 0,
     };
@@ -135,14 +136,19 @@ class DashBoardWrapper extends React.Component {
 
   rotateScreen() {
     this.setState({
-      currentScreen: (this.state.currentScreen + 1) % this.dashboards.length,
-    });
+      currentScreen: (this.state.currentScreen + 1) % DASHBOARDS.length,
+    }, console.log(this.state.currentScreen));
   }
 
   render() {
     return (
       <div className="db-wrapper" onClick={() => this.rotateScreen()}>
-        {this.dashboards[this.state.currentScreen]}
+        { DASHBOARDS.map(db => {
+          return <DashBoard
+            db={db}
+            currentScreen={this.state.currentScreen}
+          />;
+        })};
       </div>
     );
   }
