@@ -26,7 +26,7 @@ var DASHBOARDS = [{
       tiles: [{
         color: '#00f',
         image: 'https://placekitten.com/500/502',
-        iframe: 'http://mbl.is'
+        iframe: 'https://mbl.is'
       }]
     }, {
       tiles: [{
@@ -55,7 +55,7 @@ var DASHBOARDS = [{
       tiles: [{
         color: '#00f',
         image: 'https://placekitten.com/400/430',
-        iframe: 'http://visir.is'
+        iframe: 'https://visir.is'
       }]
     }]
   }]
