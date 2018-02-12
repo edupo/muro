@@ -22,6 +22,7 @@ const DASHBOARDS = [
               {
                 color: '#0ff',
                 image: 'https://placekitten.com/500/501',
+                iframe: 'http://localhost:3000',
               },
             ],
           },
