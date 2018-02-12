@@ -13,22 +13,28 @@ body {
   height: 100vh;
   width: 100%;
   align-content: stretch;
+  -webkit-flex-direction: column;
   flex-direction: column;
 }
 
 .db-row {
+  -webkit-flex: 1;
   flex: 1;
   display: flex;
+  -webkit-flex-direction: row;
   flex-direction: row;
 }
 
 .db-col {
+  -webkit-flex: 1;
   flex: 1;
   display: flex;
+  -webkit-flex-direction: column;
   flex-direction: column;
 }
 
 .db-tile {
+  -webkit-flex: 1;
   flex: 1;
   background-size: cover;
 }
