@@ -26,13 +26,12 @@ var DASHBOARDS = [{
       tiles: [{
         color: '#00f',
         image: 'https://placekitten.com/500/502',
-        iframe: 'https://mbl.is'
+        iframe: 'https://jenkins.air.emea.group.atlascopco.com/view/Greenlights/'
       }]
     }, {
       tiles: [{
         color: '#0ff',
-        image: 'https://placekitten.com/500/501',
-        iframe: 'http://localhost:3000'
+        image: 'https://placekitten.com/500/501'
       }]
     }]
   }]
@@ -55,7 +54,7 @@ var DASHBOARDS = [{
       tiles: [{
         color: '#00f',
         image: 'https://placekitten.com/400/430',
-        iframe: 'https://visir.is'
+        iframe: 'https://elastic.air.emea.group.atlascopco.com/app/kibana#/dashboard/Metricbeat-system-overview?_g=()&_a=(description:%27%27,filters:!(),fullScreenMode:!f,options:(darkTheme:!f),panels:!((col:1,id:System-Navigation,panelIndex:9,row:1,size_x:12,size_y:1,type:visualization),(col:1,id:c6f2ffd0-4d17-11e7-a196-69b9a7a020a9,panelIndex:11,row:2,size_x:2,size_y:2,type:visualization),(col:7,id:fe064790-1b1f-11e7-bec4-a5e9ec5cab8b,panelIndex:12,row:4,size_x:6,size_y:5,type:visualization),(col:1,id:%27855899e0-1b1c-11e7-b09e-037021c4f8df%27,panelIndex:13,row:4,size_x:6,size_y:5,type:visualization),(col:1,id:%277cdb1330-4d1a-11e7-a196-69b9a7a020a9%27,panelIndex:14,row:9,size_x:12,size_y:6,type:visualization),(col:9,id:%27522ee670-1b92-11e7-bec4-a5e9ec5cab8b%27,panelIndex:16,row:2,size_x:2,size_y:2,type:visualization),(col:11,id:%271aae9140-1b93-11e7-8ada-3df93aab833e%27,panelIndex:17,row:2,size_x:2,size_y:2,type:visualization),(col:7,id:%27825fdb80-4d1d-11e7-b5f2-2b7c1895bf32%27,panelIndex:18,row:2,size_x:2,size_y:2,type:visualization),(col:5,id:d3166e80-1b91-11e7-bec4-a5e9ec5cab8b,panelIndex:19,row:2,size_x:2,size_y:2,type:visualization),(col:3,id:%2783e12df0-1b91-11e7-bec4-a5e9ec5cab8b%27,panelIndex:20,row:2,size_x:2,size_y:2,type:visualization)),query:(language:lucene,query:(query_string:(analyze_wildcard:!t,default_field:%27*%27,query:%27*%27))),timeRestore:!f,title:%27%5BMetricbeat%20System%5D%20Overview%27,uiState:(P-11:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-12:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-14:(vis:(defaultColors:(%270%25%20-%2015%25%27:%27rgb(247,252,245)%27,%2715%25%20-%2030%25%27:%27rgb(199,233,192)%27,%2730%25%20-%2045%25%27:%27rgb(116,196,118)%27,%2745%25%20-%2060%25%27:%27rgb(35,139,69)%27))),P-16:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-2:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-3:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27)))),viewMode:view)'
       }]
     }]
   }]
@@ -65,7 +64,19 @@ var DASHBOARDS = [{
     cols: [{
       tiles: [{
         color: '#ff0',
-        image: 'https://placekitten.com/501/502'
+        image: 'https://placekitten.com/501/502',
+        iframe: 'https://elastic.air.emea.group.atlascopco.com/app/kibana#/dashboard/Metricbeat-system-overview?_g=()&_a=(description:%27%27,filters:!(),fullScreenMode:!f,options:(darkTheme:!f),panels:!((col:1,id:System-Navigation,panelIndex:9,row:1,size_x:12,size_y:1,type:visualization),(col:1,id:c6f2ffd0-4d17-11e7-a196-69b9a7a020a9,panelIndex:11,row:2,size_x:2,size_y:2,type:visualization),(col:7,id:fe064790-1b1f-11e7-bec4-a5e9ec5cab8b,panelIndex:12,row:4,size_x:6,size_y:5,type:visualization),(col:1,id:%27855899e0-1b1c-11e7-b09e-037021c4f8df%27,panelIndex:13,row:4,size_x:6,size_y:5,type:visualization),(col:1,id:%277cdb1330-4d1a-11e7-a196-69b9a7a020a9%27,panelIndex:14,row:9,size_x:12,size_y:6,type:visualization),(col:9,id:%27522ee670-1b92-11e7-bec4-a5e9ec5cab8b%27,panelIndex:16,row:2,size_x:2,size_y:2,type:visualization),(col:11,id:%271aae9140-1b93-11e7-8ada-3df93aab833e%27,panelIndex:17,row:2,size_x:2,size_y:2,type:visualization),(col:7,id:%27825fdb80-4d1d-11e7-b5f2-2b7c1895bf32%27,panelIndex:18,row:2,size_x:2,size_y:2,type:visualization),(col:5,id:d3166e80-1b91-11e7-bec4-a5e9ec5cab8b,panelIndex:19,row:2,size_x:2,size_y:2,type:visualization),(col:3,id:%2783e12df0-1b91-11e7-bec4-a5e9ec5cab8b%27,panelIndex:20,row:2,size_x:2,size_y:2,type:visualization)),query:(language:lucene,query:(query_string:(analyze_wildcard:!t,default_field:%27*%27,query:%27*%27))),timeRestore:!f,title:%27%5BMetricbeat%20System%5D%20Overview%27,uiState:(P-11:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-12:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-14:(vis:(defaultColors:(%270%25%20-%2015%25%27:%27rgb(247,252,245)%27,%2715%25%20-%2030%25%27:%27rgb(199,233,192)%27,%2730%25%20-%2045%25%27:%27rgb(116,196,118)%27,%2745%25%20-%2060%25%27:%27rgb(35,139,69)%27))),P-16:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-2:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27))),P-3:(vis:(defaultColors:(%270%20-%20100%27:%27rgb(0,104,55)%27)))),viewMode:view)'
+      }]
+    }]
+  }]
+}, {
+  id: 3,
+  rows: [{
+    cols: [{
+      tiles: [{
+        color: '#ff0',
+        image: 'https://placekitten.com/501/502',
+        iframe: 'https://jenkins.air.emea.group.atlascopco.com/view/Greenlights/'
       }]
     }]
   }]
