@@ -1,6 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 const DASHBOARDS = [
   {
@@ -151,20 +152,30 @@ class DashBoardWrapper extends React.Component {
     this.state = {
       currentScreen: 0,
       timer: null,
+      dashboards: undefined,
     };
   };
 
   componentDidMount() {
-    let timer = setInterval(this.tick.bind(this), 10000);
-    this.setState({timer});
+    axios.get('/api/dashboards/')
+      .then(res => {
+        const timer = setInterval(this.tick.bind(this), 10000);
+        this.setState({
+          timer,
+          dashboards: res.data.dashboards,
+        });
+      });
   }
+
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
+    if (this.state.timer) {
+      this.clearInterval(this.state.timer);
+    }
   }
 
   rotateScreen() {
     this.setState({
-      currentScreen: (this.state.currentScreen + 1) % DASHBOARDS.length,
+      currentScreen: (this.state.currentScreen + 1) % this.state.dashboards.length,
     }, console.log(this.state.currentScreen));
   }
 
@@ -174,16 +185,20 @@ class DashBoardWrapper extends React.Component {
 
 
   render() {
-    return (
-      <div className="db-wrapper" onClick={() => this.rotateScreen()}>
-        { DASHBOARDS.map(db => {
-          return <DashBoard
-            db={db}
-            currentScreen={this.state.currentScreen}
-          />;
-        })};
-      </div>
-    );
+    if (this.state.dashboards) {
+      return (
+        <div className="db-wrapper" onClick={() => this.rotateScreen()}>
+          {this.state.dashboards.map(db => {
+            return <DashBoard
+              db={db}
+              currentScreen={this.state.currentScreen}
+            />;
+          })};
+        </div>
+      );
+    } else {
+      return <div>Loading...</div>;
+    }
   }
 }
 
