@@ -30,7 +30,7 @@ body {
   -webkit-flex-direction: column;
   flex-direction: column; }
 
-.db-tile {
+.db-brick {
   -webkit-flex: 1;
   flex: 1;
   background-size: cover; }
