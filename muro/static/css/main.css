@@ -42,3 +42,13 @@ body {
 
 .hidden {
   display: none; }
+
+.cb {
+  box-sizing: border-box;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 20px; }

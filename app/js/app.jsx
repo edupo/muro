@@ -3,11 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+import ControlBar from './components/controlbar'
+
 
 const DashBoardCol = (props) => (
   <div className="db-col">
-    { props.bricks.map(brick => (
+    { props.bricks.map((brick, i) => (
       <div
+        key={i}
         className="db-brick"
         style={{
           backgroundColor: brick.color,
@@ -23,8 +26,9 @@ const DashBoardCol = (props) => (
 
 const DashBoardRow = (props) => (
   <div className="db-row">
-    { props.cols.map(col => (
+    { props.cols.map((col, i) => (
       <DashBoardCol
+        key={i}
         bricks={col.bricks}
       />
     ))}
@@ -34,8 +38,9 @@ const DashBoardRow = (props) => (
 
 const DashBoard = (props) => (
   <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
-    { props.db.rows.map(row => (
+    { props.db.rows.map((row, i) => (
       <DashBoardRow
+        key={i}
         cols={row.cols}
       />
     ))}
@@ -50,13 +55,15 @@ class DashBoardWrapper extends React.Component {
       currentScreen: 0,
       timer: null,
       dashboards: undefined,
+      timerInterval: 10,
     };
+    this.updateInterval = this.updateInterval.bind(this);
   }
 
   componentDidMount() {
     axios.get('/api/dashboards/')
       .then(res => {
-        const timer = setInterval(this.tick.bind(this), 10000);
+        const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
         this.setState({
           timer,
           dashboards: res.data.dashboards,
@@ -66,7 +73,7 @@ class DashBoardWrapper extends React.Component {
 
   componentWillUnmount() {
     if (this.state.timer) {
-      this.clearInterval(this.state.timer);
+      clearInterval(this.state.timer);
     }
   }
 
@@ -80,6 +87,16 @@ class DashBoardWrapper extends React.Component {
     this.rotateScreen();
   }
 
+  updateInterval(event) {
+    clearInterval(this.state.timer);
+    const newInterval = event.target.value;
+    const timer = setInterval(this.tick.bind(this), newInterval * 1000);
+    this.setState({
+      timer,
+      timerInterval: newInterval,
+    });
+  }
+
 
   render() {
     if (this.state.dashboards) {
@@ -87,10 +104,15 @@ class DashBoardWrapper extends React.Component {
         <div className="db-wrapper">
           {this.state.dashboards.map(db => (
             <DashBoard
+              key={db.id}
               db={db}
               currentScreen={this.state.currentScreen}
             />
           ))}
+          <ControlBar
+            interval={this.state.timerInterval}
+            updateInterval={this.updateInterval}
+          />
         </div>
       );
     }
