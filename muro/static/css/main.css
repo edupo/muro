@@ -2,7 +2,8 @@ body {
   background: #ddd;
   color: #313131;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  font-family: 'Roboto', sans-serif; }
 
 .db {
   display: -webkit-flex;
@@ -18,6 +19,9 @@ body {
   left: 0;
   opacity: 1;
   transition: opacity 2s ease-in-out; }
+
+.db-wrapper {
+  overflow: hidden; }
 
 .db-row {
   -webkit-flex: 1;
@@ -51,9 +55,27 @@ body {
 .cb {
   box-sizing: border-box;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
-  font-size: 20px; }
+  font-size: 20px;
+  opacity: 1;
+  transition: bottom 1s, opacity 1s;
+  z-index: 100; }
+  .cb.is-hidden {
+    bottom: -150px;
+    opacity: 0; }
+    .cb.is-hidden:hover {
+      bottom: 0px; }
+
+.cb-input {
+  color: #fff;
+  border: 1px solid #666;
+  background: none;
+  font-size: 20px;
+  width: 140px;
+  text-align: right;
+  margin-left: 10px; }

@@ -56,6 +56,7 @@ class DashBoardWrapper extends React.Component {
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
+      showControlBar: false,
     };
     this.updateInterval = this.updateInterval.bind(this);
   }
@@ -69,6 +70,7 @@ class DashBoardWrapper extends React.Component {
           dashboards: res.data.dashboards,
         });
       });
+
   }
 
   componentWillUnmount() {
@@ -101,7 +103,10 @@ class DashBoardWrapper extends React.Component {
   render() {
     if (this.state.dashboards) {
       return (
-        <div className="db-wrapper">
+        <div
+          className="db-wrapper"
+          onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
+        >
           {this.state.dashboards.map(db => (
             <DashBoard
               key={db.id}
@@ -112,6 +117,7 @@ class DashBoardWrapper extends React.Component {
           <ControlBar
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}
+            show={this.state.showControlBar}
           />
         </div>
       );
