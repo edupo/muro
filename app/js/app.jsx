@@ -46,7 +46,7 @@ const DashBoardRow = (props) => {
 const DashBoard = (props) => {
   const rowCount = props.db.rows.length;
   return (
-    <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
+    <div className={'db ' + (props.currentScreen === props.db.id ? 'show' : 'hidden')}>
       {props.db.rows.map((row, i) => (
         <DashBoardRow
           key={i}

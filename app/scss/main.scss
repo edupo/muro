@@ -19,12 +19,12 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 1;
-  transition: opacity 2s ease-in-out;
 }
 
 .db-wrapper {
   overflow: hidden;
+  height: 100vh;
+  display: block;
 }
 
 .db-row {
@@ -62,8 +62,34 @@ body {
   width: 20%;
 }
 
-.hidden {
-  opacity: 0;
+.db.show {
+    animation: fadeIn 2s;
+    animation-fill-mode: both
+}
+@keyframes fadeIn {
+    from {
+        transform:scale(0.7) rotate(-30deg);
+        opacity:0
+    }
+    to {
+        transform:scale(1) rotate(0deg);
+        opacity:1
+    }
+}
+
+.db.hidden {
+    animation: fadeOut 2s;
+    animation-fill-mode: both
+}
+@keyframes fadeOut {
+    from {
+        transform: scale(1) rotate(0);
+        opacity:1
+    }
+  to {
+        transform:scale(1.7) rotate(30deg);
+        opacity:0
+    }
 }
 
 .cb {

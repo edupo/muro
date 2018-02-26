@@ -68,7 +68,7 @@ var DashBoard = function DashBoard(props) {
   var rowCount = props.db.rows.length;
   return _react2.default.createElement(
     'div',
-    { className: 'db' + (props.currentScreen === props.db.id ? '' : ' hidden') },
+    { className: 'db ' + (props.currentScreen === props.db.id ? 'show' : 'hidden') },
     props.db.rows.map(function (row, i) {
       return _react2.default.createElement(DashBoardRow, {
         key: i,
