@@ -115,7 +115,6 @@ class DashBoardWrapper extends React.Component {
       return (
         <div
           className="db-wrapper"
-          onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
         >
           {this.state.dashboards.map(db => (
             <DashBoard
@@ -124,6 +123,19 @@ class DashBoardWrapper extends React.Component {
               currentScreen={this.state.currentScreen}
             />
           ))}
+          <button
+            className="cb-toggler"
+            href="#"
+            onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
+          >
+            <svg
+              className="icon icon-cog"
+            >
+              <use
+                xlinkHref="#icon-cog"
+              />
+            </svg>
+          </button>
           <ControlBar
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}

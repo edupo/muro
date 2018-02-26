@@ -150,10 +150,7 @@ var DashBoardWrapper = function (_React$Component) {
         return _react2.default.createElement(
           'div',
           {
-            className: 'db-wrapper',
-            onClick: function onClick() {
-              return _this3.setState({ showControlBar: !_this3.state.showControlBar });
-            }
+            className: 'db-wrapper'
           },
           this.state.dashboards.map(function (db) {
             return _react2.default.createElement(DashBoard, {
@@ -162,6 +159,25 @@ var DashBoardWrapper = function (_React$Component) {
               currentScreen: _this3.state.currentScreen
             });
           }),
+          _react2.default.createElement(
+            'button',
+            {
+              className: 'cb-toggler',
+              href: '#',
+              onClick: function onClick() {
+                return _this3.setState({ showControlBar: !_this3.state.showControlBar });
+              }
+            },
+            _react2.default.createElement(
+              'svg',
+              {
+                className: 'icon icon-cog'
+              },
+              _react2.default.createElement('use', {
+                xlinkHref: '#icon-cog'
+              })
+            )
+          ),
           _react2.default.createElement(_controlbar2.default, {
             interval: this.state.timerInterval,
             updateInterval: this.updateInterval,
