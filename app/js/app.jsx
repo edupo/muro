@@ -6,47 +6,57 @@ import axios from 'axios';
 import ControlBar from './components/controlbar';
 
 
-const DashBoardCol = (props) => (
-  <div className="db-col">
-    { props.bricks.map((brick, i) => (
-      <div
-        key={i}
-        className="db-brick"
-        style={{
-          backgroundColor: brick.color,
-          backgroundImage: 'url("' + brick.image + '")',
-        }}
-      >
-        { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
-      </div>
-    ))}
-  </div>
-);
+const DashBoardCol = (props) => {
+  const brickCount = props.bricks.length;
+  return (
+    <div className={"db-col db-col-" + props.colCount}>
+      { props.bricks.map((brick, i) => (
+        <div
+          key={i}
+          className={"db-brick db-brick-" + brickCount}
+          style={{
+            backgroundColor: brick.color,
+            backgroundImage: 'url("' + brick.image + '")',
+          }}
+        >
+          { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
+        </div>
+      ))}
+    </div>
+  );
+};
 
 
-const DashBoardRow = (props) => (
-  <div className="db-row">
-    { props.cols.map((col, i) => (
-      <DashBoardCol
-        key={i}
-        bricks={col.bricks}
-      />
-    ))}
-  </div>
-);
+const DashBoardRow = (props) => {
+  const colCount = props.cols.length;
+  return (
+    <div className={"db-row db-row-" + props.rowCount}>
+      {props.cols.map((col, i) => (
+        <DashBoardCol
+          key={i}
+          bricks={col.bricks}
+          colCount={colCount}
+        />
+      ))}
+    </div>
+  );
+};
 
 
-const DashBoard = (props) => (
-  <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
-    { props.db.rows.map((row, i) => (
-      <DashBoardRow
-        key={i}
-        cols={row.cols}
-      />
-    ))}
-  </div>
-);
-
+const DashBoard = (props) => {
+  const rowCount = props.db.rows.length;
+  return (
+    <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
+      {props.db.rows.map((row, i) => (
+        <DashBoardRow
+          key={i}
+          cols={row.cols}
+          rowCount={rowCount}
+        />
+      ))}
+    </div>
+  );
+};
 
 class DashBoardWrapper extends React.Component {
   constructor(props) {

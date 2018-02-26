@@ -28,15 +28,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var DashBoardCol = function DashBoardCol(props) {
+  var brickCount = props.bricks.length;
   return _react2.default.createElement(
     'div',
-    { className: 'db-col' },
+    { className: "db-col db-col-" + props.colCount },
     props.bricks.map(function (brick, i) {
       return _react2.default.createElement(
         'div',
         {
           key: i,
-          className: 'db-brick',
+          className: "db-brick db-brick-" + brickCount,
           style: {
             backgroundColor: brick.color,
             backgroundImage: 'url("' + brick.image + '")'
@@ -49,26 +50,30 @@ var DashBoardCol = function DashBoardCol(props) {
 };
 
 var DashBoardRow = function DashBoardRow(props) {
+  var colCount = props.cols.length;
   return _react2.default.createElement(
     'div',
-    { className: 'db-row' },
+    { className: "db-row db-row-" + props.rowCount },
     props.cols.map(function (col, i) {
       return _react2.default.createElement(DashBoardCol, {
         key: i,
-        bricks: col.bricks
+        bricks: col.bricks,
+        colCount: colCount
       });
     })
   );
 };
 
 var DashBoard = function DashBoard(props) {
+  var rowCount = props.db.rows.length;
   return _react2.default.createElement(
     'div',
     { className: 'db' + (props.currentScreen === props.db.id ? '' : ' hidden') },
     props.db.rows.map(function (row, i) {
       return _react2.default.createElement(DashBoardRow, {
         key: i,
-        cols: row.cols
+        cols: row.cols,
+        rowCount: rowCount
       });
     })
   );
