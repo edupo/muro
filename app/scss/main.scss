@@ -2,11 +2,15 @@
 @import 'variables';
 
 body {
-  background: $background_color;
+  background: #000;
   color: $color;
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+}
+
+@supports (display: flex) {
+  body { background-color: $background_color; }
 }
 
 .db {
