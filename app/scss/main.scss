@@ -68,11 +68,11 @@ body {
 }
 @keyframes fadeIn {
     from {
-        transform:scale(0.7) rotate(30deg);
+        transform:scale(0.7);
         opacity:0
     }
     to {
-        transform:scale(1) rotate(0);
+        transform:scale(1);
         opacity:1
     }
 }
@@ -83,11 +83,11 @@ body {
 }
 @keyframes fadeOut {
     from {
-        transform: scale(1) rotate(0);
+        transform: scale(1);
         opacity:1
     }
   to {
-        transform:scale(1.7) rotate(-30deg);
+        transform:scale(1.7);
         opacity:0
     }
 }
