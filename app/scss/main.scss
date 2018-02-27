@@ -68,11 +68,11 @@ body {
 }
 @keyframes fadeIn {
     from {
-        transform:scale(1.2) rotateY(60deg);
+        //transform:scale(1.2) rotateY(60deg);
         opacity:0;
     }
     to {
-        transform:scale(1) rotateY(0);
+        //transform:scale(1) rotateY(0);
         opacity:1;
     }
 }
@@ -83,18 +83,18 @@ body {
 }
 @keyframes fadeOut {
     from {
-        transform: scale(1) rotateY(0deg);
+        //transform: scale(1) rotateY(0deg);
         opacity:1;
     }
   to {
-        transform:scale(1.7) rotateY(60deg);
+        //transform:scale(1.7) rotateY(60deg);
         opacity:0;
     }
 }
 
 .cb {
   box-sizing: border-box;
-  padding: 20px 20px 20px 50px;
+  padding: 20px 20px 20px 80px;
   background: rgba(0, 0, 0, .6);
   color: #fff;
   width: 100%;
