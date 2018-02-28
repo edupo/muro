@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import ControlBar from './components/controlbar'
+import ControlBar from './components/controlbar';
 
 
 const DashBoardCol = (props) => (
