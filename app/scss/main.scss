@@ -9,16 +9,13 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-@supports (display: flex) {
-  body { background-color: $background_color; }
-}
-
 .db {
   height: 100vh;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  transition: opacity 2s;
 }
 
 .db-wrapper {
@@ -63,33 +60,11 @@ body {
 }
 
 .db.show {
-    animation: fadeIn 2s;
-    animation-fill-mode: both
-}
-@keyframes fadeIn {
-    from {
-        //transform:scale(1.2) rotateY(60deg);
-        opacity:0;
-    }
-    to {
-        //transform:scale(1) rotateY(0);
-        opacity:1;
-    }
+  opacity: 1;
 }
 
 .db.hidden {
-    animation: fadeOut 2s;
-    animation-fill-mode: both
-}
-@keyframes fadeOut {
-    from {
-        //transform: scale(1) rotateY(0deg);
-        opacity:1;
-    }
-  to {
-        //transform:scale(1.7) rotateY(60deg);
-        opacity:0;
-    }
+  opacity: 0;
 }
 
 .cb {

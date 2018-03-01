@@ -52,16 +52,13 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif; }
 
-@supports (display: flex) {
-  body {
-    background-color: #ddd; } }
-
 .db {
   height: 100vh;
   width: 100%;
   position: absolute;
   top: 0;
-  left: 0; }
+  left: 0;
+  transition: opacity 2s; }
 
 .db-wrapper {
   overflow: hidden;
@@ -97,24 +94,10 @@ body {
   width: 20%; }
 
 .db.show {
-  animation: fadeIn 2s;
-  animation-fill-mode: both; }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
+  opacity: 1; }
 
 .db.hidden {
-  animation: fadeOut 2s;
-  animation-fill-mode: both; }
-
-@keyframes fadeOut {
-  from {
-    opacity: 1; }
-  to {
-    opacity: 0; } }
+  opacity: 0; }
 
 .cb {
   box-sizing: border-box;

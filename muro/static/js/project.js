@@ -103,7 +103,7 @@ var DashBoardWrapper = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      _axios2.default.get('./json_feed/').then(function (res) {
+      _axios2.default.get('json_feed/').then(function (res) {
         var timer = setInterval(_this2.tick.bind(_this2), _this2.state.timerInterval * 1000);
         _this2.setState({
           timer: timer,

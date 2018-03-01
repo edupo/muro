@@ -72,7 +72,7 @@ class DashBoardWrapper extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('./json_feed/')
+    axios.get('json_feed/')
       .then(res => {
         const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
         this.setState({
