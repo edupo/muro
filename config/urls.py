@@ -25,6 +25,7 @@ import dummyjson.views as dummy_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/dashboards/$', dummy_views.json_feed, name='json_feed'),
+    url(r'^', include('dashboards.urls', namespace='dashboards')),
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'),
         name='home'),
 ]
