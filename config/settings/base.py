@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': env.db(
         'DATABASE_URL',
-        default='postgres:///muro'),
+        default='sqlite:////usr/data/muro.db'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

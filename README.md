@@ -14,19 +14,31 @@ Muro is our attempt to solve all that:
 
 # Usage
 
-No idea yet...
+## Docker
+
+Docker container is used for test deployment. After every change you need to
+rebuild the Dockerfile unsing `make`.
 
 ```
-$ nocode yet
+$ make build
+```
+
+By default muro uses sqlite mounted as a voulume in the container. (See the
+`Makefile` for more details). That means that the first time you use the
+container you must initialize the database like this:
+```
+$ make login
+root@muro$ ./manage.py migrate
+root@muro$ ./manage.py createsuperuser
 ```
 
 # To do 
 
 ## Basic functionalities
 
-- [ ] Pages, pictures, embedded javascript are _bricks_.
-- [ ] _Bricks_ are organized in layouts or _muros_.
-- [ ] _muros_ rotates smoothly throughout the day.
+- [x] Pages, pictures, embedded javascript are _bricks_.
+- [x] _Bricks_ are organized in layouts or _muros_.
+- [x] _muros_ rotates smoothly throughout the day.
 - [ ] Each _muro_ can be in the rotation only during a configured interval of 
     time.
 - [ ] Overlay _bricks_ on top of all the others during a 
