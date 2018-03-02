@@ -1,0 +1,72 @@
+{
+  "dashboards": [
+    {
+      "id": 0,
+      "rows": [
+        {
+          "cols": [
+            {
+              "bricks": [
+                {
+                  "color": "#00f",
+                  "image": "http://crc9.emea.group.atlascopco.com/files/resources/images/bg.jpg",
+                  "iframe": "https://elastic.air.emea.group.atlascopco.com/app/kibana#/"
+                }
+              ]
+            },
+            {
+              "bricks": [
+                {
+                  "color": "#0ff",
+                  "image": "http://crc9.emea.group.atlascopco.com/files/resources/images/bg.jpg",
+                  "iframe": "https://elastic.air.emea.group.atlascopco.com/app/kibana#/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "rows": [
+        {
+          "cols": [
+            {
+              "bricks": [
+                {
+                  "color": "#ff0",
+                  "image": "http://crc9.emea.group.atlascopco.com/files/resources/images/bg.jpg",
+                  "iframe": "https://jenkins.air.emea.group.atlascopco.com/view/Greenlights/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "rows": [
+        {
+          "cols": [
+            {
+              "bricks": [
+                {
+                  "color": "#ff0",
+                  "image": "http://crc9.emea.group.atlascopco.com/files/resources/images/bg.jpg",
+                  "iframe": "https://jenkins.air.emea.group.atlascopco.com/job/crc/view/STAGING/"
+                },
+                {
+                  "color": "#0ff",
+                  "image": "http://crc9.emea.group.atlascopco.com/files/resources/images/bg.jpg",
+                  "iframe": "https://jenkins.air.emea.group.atlascopco.com/job/crc/view/NIGHTLY/"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,47 +6,57 @@ import axios from 'axios';
 import ControlBar from './components/controlbar';
 
 
-const DashBoardCol = (props) => (
-  <div className="db-col">
-    { props.bricks.map((brick, i) => (
-      <div
-        key={i}
-        className="db-brick"
-        style={{
-          backgroundColor: brick.color,
-          backgroundImage: 'url("' + brick.image + '")',
-        }}
-      >
-        { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
-      </div>
-    ))}
-  </div>
-);
+const DashBoardCol = (props) => {
+  const brickCount = props.bricks.length;
+  return (
+    <div className={"db-col db-col-" + props.colCount}>
+      { props.bricks.map((brick, i) => (
+        <div
+          key={i}
+          className={"db-brick db-brick-" + brickCount}
+          style={{
+            backgroundColor: brick.color,
+            backgroundImage: 'url("' + brick.image + '")',
+          }}
+        >
+          { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
+        </div>
+      ))}
+    </div>
+  );
+};
 
 
-const DashBoardRow = (props) => (
-  <div className="db-row">
-    { props.cols.map((col, i) => (
-      <DashBoardCol
-        key={i}
-        bricks={col.bricks}
-      />
-    ))}
-  </div>
-);
+const DashBoardRow = (props) => {
+  const colCount = props.cols.length;
+  return (
+    <div className={"db-row db-row-" + props.rowCount}>
+      {props.cols.map((col, i) => (
+        <DashBoardCol
+          key={i}
+          bricks={col.bricks}
+          colCount={colCount}
+        />
+      ))}
+    </div>
+  );
+};
 
 
-const DashBoard = (props) => (
-  <div className={'db' + (props.currentScreen === props.db.id ? '' : ' hidden')}>
-    { props.db.rows.map((row, i) => (
-      <DashBoardRow
-        key={i}
-        cols={row.cols}
-      />
-    ))}
-  </div>
-);
-
+const DashBoard = (props) => {
+  const rowCount = props.db.rows.length;
+  return (
+    <div className={'db ' + (props.currentScreen === props.order ? 'show' : 'hidden')}>
+      {props.db.rows.map((row, i) => (
+        <DashBoardRow
+          key={i}
+          cols={row.cols}
+          rowCount={rowCount}
+        />
+      ))}
+    </div>
+  );
+};
 
 class DashBoardWrapper extends React.Component {
   constructor(props) {
@@ -56,12 +66,13 @@ class DashBoardWrapper extends React.Component {
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
+      showControlBar: false,
     };
     this.updateInterval = this.updateInterval.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/api/dashboards/')
+    axios.get('json_feed/')
       .then(res => {
         const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
         this.setState({
@@ -69,6 +80,7 @@ class DashBoardWrapper extends React.Component {
           dashboards: res.data.dashboards,
         });
       });
+
   }
 
   componentWillUnmount() {
@@ -101,17 +113,34 @@ class DashBoardWrapper extends React.Component {
   render() {
     if (this.state.dashboards) {
       return (
-        <div className="db-wrapper">
-          {this.state.dashboards.map(db => (
+        <div
+          className="db-wrapper"
+        >
+          {this.state.dashboards.map((db, i) => (
             <DashBoard
               key={db.id}
+              order={i}
               db={db}
               currentScreen={this.state.currentScreen}
             />
           ))}
+          <button
+            className="cb-toggler"
+            href="#"
+            onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
+          >
+            <svg
+              className="icon icon-cog"
+            >
+              <use
+                xlinkHref="#icon-cog"
+              />
+            </svg>
+          </button>
           <ControlBar
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}
+            show={this.state.showControlBar}
           />
         </div>
       );
