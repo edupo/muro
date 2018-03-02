@@ -68,7 +68,7 @@ var DashBoard = function DashBoard(props) {
   var rowCount = props.db.rows.length;
   return _react2.default.createElement(
     'div',
-    { className: 'db ' + (props.currentScreen === props.db.id ? 'show' : 'hidden') },
+    { className: 'db ' + (props.currentScreen === props.order ? 'show' : 'hidden') },
     props.db.rows.map(function (row, i) {
       return _react2.default.createElement(DashBoardRow, {
         key: i,
@@ -152,9 +152,10 @@ var DashBoardWrapper = function (_React$Component) {
           {
             className: 'db-wrapper'
           },
-          this.state.dashboards.map(function (db) {
+          this.state.dashboards.map(function (db, i) {
             return _react2.default.createElement(DashBoard, {
               key: db.id,
+              order: i,
               db: db,
               currentScreen: _this3.state.currentScreen
             });

@@ -46,7 +46,7 @@ const DashBoardRow = (props) => {
 const DashBoard = (props) => {
   const rowCount = props.db.rows.length;
   return (
-    <div className={'db ' + (props.currentScreen === props.db.id ? 'show' : 'hidden')}>
+    <div className={'db ' + (props.currentScreen === props.order ? 'show' : 'hidden')}>
       {props.db.rows.map((row, i) => (
         <DashBoardRow
           key={i}
@@ -116,9 +116,10 @@ class DashBoardWrapper extends React.Component {
         <div
           className="db-wrapper"
         >
-          {this.state.dashboards.map(db => (
+          {this.state.dashboards.map((db, i) => (
             <DashBoard
               key={db.id}
+              order={i}
               db={db}
               currentScreen={this.state.currentScreen}
             />
