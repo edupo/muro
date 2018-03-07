@@ -95,6 +95,7 @@ var DashBoardWrapper = function (_React$Component) {
       showControlBar: false
     };
     _this.updateInterval = _this.updateInterval.bind(_this);
+    _this.playPause = _this.playPause.bind(_this);
     return _this;
   }
 
@@ -116,6 +117,21 @@ var DashBoardWrapper = function (_React$Component) {
     value: function componentWillUnmount() {
       if (this.state.timer) {
         clearInterval(this.state.timer);
+      }
+    }
+  }, {
+    key: 'playPause',
+    value: function playPause() {
+      if (this.state.timer) {
+        clearInterval(this.state.timer);
+        this.setState({
+          timer: null
+        });
+      } else {
+        var timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
+        this.setState({
+          timer: timer
+        });
       }
     }
   }, {
@@ -182,7 +198,8 @@ var DashBoardWrapper = function (_React$Component) {
           _react2.default.createElement(_controlbar2.default, {
             interval: this.state.timerInterval,
             updateInterval: this.updateInterval,
-            show: this.state.showControlBar
+            show: this.state.showControlBar,
+            playPause: this.playPause
           })
         );
       }
@@ -251,7 +268,14 @@ var ControlBar = function ControlBar(props) {
       name: 'cb-interval',
       id: 'cb-interval'
     }),
-    ' seconds'
+    ' seconds',
+    _react2.default.createElement(
+      'button',
+      { onClick: function onClick() {
+          return props.playPause();
+        } },
+      'Play/Pause'
+    )
   );
 };
 

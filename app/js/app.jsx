@@ -69,6 +69,7 @@ class DashBoardWrapper extends React.Component {
       showControlBar: false,
     };
     this.updateInterval = this.updateInterval.bind(this);
+    this.playPause = this.playPause.bind(this);
   }
 
   componentDidMount() {
@@ -86,6 +87,20 @@ class DashBoardWrapper extends React.Component {
   componentWillUnmount() {
     if (this.state.timer) {
       clearInterval(this.state.timer);
+    }
+  }
+
+  playPause() {
+    if (this.state.timer) {
+      clearInterval(this.state.timer);
+      this.setState({
+        timer: null,
+      });
+    } else {
+      const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
+      this.setState({
+        timer,
+      });
     }
   }
 
@@ -141,6 +156,7 @@ class DashBoardWrapper extends React.Component {
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}
             show={this.state.showControlBar}
+            playPause={this.playPause}
           />
         </div>
       );

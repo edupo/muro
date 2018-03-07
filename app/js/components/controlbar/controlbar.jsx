@@ -17,6 +17,7 @@ const ControlBar = (props) => {
         name="cb-interval"
         id="cb-interval"
       /> seconds
+      <button onClick={() => props.playPause()}>Play/Pause</button>
     </div>
   );
 };
