@@ -142,18 +142,23 @@ var DashBoardWrapper = function (_React$Component) {
     key: 'rotateScreen',
     value: function rotateScreen() {
       var nextscreen = (this.state.currentScreen + 1) % this.state.dashboards.length;
-      var isVisible = true;
-      if (this.state.dashboards[nextscreen].fromtime) {
-        var currentTime = (0, _moment2.default)();
-        var fromtime = (0, _moment2.default)(this.state.dashboards[nextscreen].fromtime, "HH:mm:ss");
-        var totime = (0, _moment2.default)(this.state.dashboards[nextscreen].totime, "HH:mm:ss");
-        if (!currentTime.isBetween(fromtime, totime)) {
-          isVisible = false;
+      var looking = true;
+      while (looking) {
+        if (this.state.dashboards[nextscreen].fromtime) {
+          var currentTime = (0, _moment2.default)();
+          var fromtime = (0, _moment2.default)(this.state.dashboards[nextscreen].fromtime, 'HH:mm:ss');
+          var totime = (0, _moment2.default)(this.state.dashboards[nextscreen].totime, 'HH:mm:ss');
+          if (!currentTime.isBetween(fromtime, totime)) {
+            nextscreen = (nextscreen + 1) % this.state.dashboards.length;
+          } else {
+            looking = false;
+          }
+        } else {
+          looking = false;
         }
       }
       this.setState({
-        currentScreen: nextscreen,
-        isVisible: isVisible
+        currentScreen: nextscreen
       });
     }
   }, {
@@ -188,8 +193,7 @@ var DashBoardWrapper = function (_React$Component) {
               key: db.id,
               order: i,
               db: db,
-              currentScreen: _this3.state.currentScreen,
-              isVisible: _this3.state.isVisible
+              currentScreen: _this3.state.currentScreen
             });
           }),
           _react2.default.createElement(
