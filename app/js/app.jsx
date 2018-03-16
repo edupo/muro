@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 import ControlBar from './components/controlbar';
 
@@ -105,8 +106,19 @@ class DashBoardWrapper extends React.Component {
   }
 
   rotateScreen() {
+    let nextscreen = (this.state.currentScreen + 1) % this.state.dashboards.length;
+    let isVisible = true;
+    if (this.state.dashboards[nextscreen].fromtime) {
+      let currentTime= moment();
+      let fromtime = moment(this.state.dashboards[nextscreen].fromtime, "HH:mm:ss");
+      let totime = moment(this.state.dashboards[nextscreen].totime, "HH:mm:ss");
+      if (!currentTime.isBetween(fromtime, totime)) {
+        isVisible = false;
+      }
+    }
     this.setState({
-      currentScreen: (this.state.currentScreen + 1) % this.state.dashboards.length,
+      currentScreen: nextscreen,
+      isVisible,
     });
   }
 
@@ -137,6 +149,7 @@ class DashBoardWrapper extends React.Component {
               order={i}
               db={db}
               currentScreen={this.state.currentScreen}
+              isVisible={this.state.isVisible}
             />
           ))}
           <button

@@ -15,7 +15,8 @@ class Brick(models.Model):
 
 class Dashboard(models.Model):
     title = models.CharField(max_length=128)
-    # TODO: fromtime, totime (models.TimeField(input_formats=("%H:%i"))?)
+    fromtime = models.TimeField(blank=True, null=True)
+    totime = models.TimeField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -48,7 +49,10 @@ class Muro(models.Model):
         }
 
         for db in self.dashboards.all():
-            dashboard = {"id": db.id, "rows": []}
+            dashboard = {
+                "id": db.id, "rows": [],
+                "fromtime": db.fromtime, "totime": db.totime,
+            }
             json["dashboards"].append(dashboard)
             # Loop through the locations and see if rows and cols already exist, starting with rows.
             for bl in db.bricklocation_set.all():
