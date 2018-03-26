@@ -96,7 +96,7 @@ var DashBoardWrapper = function (_React$Component) {
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
-      showControlBar: false
+      paused: false
     };
     _this.updateInterval = _this.updateInterval.bind(_this);
     _this.playPause = _this.playPause.bind(_this);
@@ -129,12 +129,14 @@ var DashBoardWrapper = function (_React$Component) {
       if (this.state.timer) {
         clearInterval(this.state.timer);
         this.setState({
-          timer: null
+          timer: null,
+          paused: true
         });
       } else {
         var timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
         this.setState({
-          timer: timer
+          timer: timer,
+          paused: false
         });
       }
     }
@@ -196,30 +198,11 @@ var DashBoardWrapper = function (_React$Component) {
               currentScreen: _this3.state.currentScreen
             });
           }),
-          _react2.default.createElement(
-            'button',
-            {
-              className: 'cb-toggler',
-              href: '#',
-              onClick: function onClick() {
-                return _this3.setState({ showControlBar: !_this3.state.showControlBar });
-              }
-            },
-            _react2.default.createElement(
-              'svg',
-              {
-                className: 'icon icon-cog'
-              },
-              _react2.default.createElement('use', {
-                xlinkHref: '#icon-cog'
-              })
-            )
-          ),
           _react2.default.createElement(_controlbar2.default, {
             interval: this.state.timerInterval,
             updateInterval: this.updateInterval,
-            show: this.state.showControlBar,
-            playPause: this.playPause
+            playPause: this.playPause,
+            paused: this.state.paused
           })
         );
       }
@@ -265,36 +248,43 @@ var ControlBar = function ControlBar(props) {
   return _react2.default.createElement(
     'div',
     {
-      className: "cb" + (props.show ? '' : ' is-hidden'),
+      className: 'cb',
       onClick: function onClick(e) {
         return e.stopPropagation();
       }
     },
     _react2.default.createElement(
-      'h2',
-      null,
-      'muro dashboard settings'
-    ),
-    _react2.default.createElement(
-      'label',
-      { htmlFor: 'cb-interval' },
-      'Interval:'
-    ),
-    _react2.default.createElement('input', {
-      className: 'cb-input',
-      type: 'number',
-      value: props.interval,
-      onChange: props.updateInterval,
-      name: 'cb-interval',
-      id: 'cb-interval'
-    }),
-    ' seconds',
-    _react2.default.createElement(
-      'button',
-      { onClick: function onClick() {
-          return props.playPause();
-        } },
-      'Play/Pause'
+      'div',
+      { className: 'cb-slider' },
+      _react2.default.createElement(
+        'h2',
+        null,
+        'muro dashboard settings'
+      ),
+      _react2.default.createElement(
+        'label',
+        { htmlFor: 'cb-interval' },
+        'Interval:'
+      ),
+      _react2.default.createElement('input', {
+        className: 'cb-input',
+        type: 'number',
+        value: props.interval,
+        onChange: props.updateInterval,
+        name: 'cb-interval',
+        id: 'cb-interval'
+      }),
+      ' seconds',
+      _react2.default.createElement(
+        'button',
+        {
+          onClick: function onClick() {
+            return props.playPause();
+          },
+          className: 'btn btn-playpause'
+        },
+        props.paused ? 'Play' : 'Pause'
+      )
     )
   );
 };

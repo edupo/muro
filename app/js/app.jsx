@@ -67,7 +67,7 @@ class DashBoardWrapper extends React.Component {
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
-      showControlBar: false,
+      paused: false,
     };
     this.updateInterval = this.updateInterval.bind(this);
     this.playPause = this.playPause.bind(this);
@@ -96,11 +96,13 @@ class DashBoardWrapper extends React.Component {
       clearInterval(this.state.timer);
       this.setState({
         timer: null,
+        paused: true,
       });
     } else {
       const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
       this.setState({
         timer,
+        paused: false,
       });
     }
   }
@@ -157,24 +159,11 @@ class DashBoardWrapper extends React.Component {
               currentScreen={this.state.currentScreen}
             />
           ))}
-          <button
-            className="cb-toggler"
-            href="#"
-            onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
-          >
-            <svg
-              className="icon icon-cog"
-            >
-              <use
-                xlinkHref="#icon-cog"
-              />
-            </svg>
-          </button>
           <ControlBar
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}
-            show={this.state.showControlBar}
             playPause={this.playPause}
+            paused={this.state.paused}
           />
         </div>
       );
