@@ -95,9 +95,10 @@ body {
   font-size: 20px;
   z-index: 100;
   padding: 20px 20px 20px 80px;
-  transition: 1s opacity;
+  transition: 0.7s opacity;
   background: rgba(0,0,0,.5);
   color: #fff;
+  box-shadow: 2px 4px 10px #000;
   &:hover {
     opacity: 1;
   }
