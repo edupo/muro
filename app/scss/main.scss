@@ -17,7 +17,11 @@ body {
 
 .btn-playpause {
   font-size: 20px;
-  width: 150px;
+  padding: {
+    top: 20px;
+    bottom: 20px;
+  }
+  width: 100px;
   font-weight: bold;
   &:active {
     color: purple;
@@ -103,7 +107,7 @@ body {
   color: #fff;
   border: 1px solid #666;
   background: none;
-  font-size: 20px;
+  font-size: 40px;
   width: 140px;
   text-align: right;
   margin-left: 10px;
@@ -126,6 +130,11 @@ body {
   &:hover {
     opacity: 1;
   }
+}
+
+.cb-setting {
+  float: left;
+  padding: 20px;
 }
 
 .icon {

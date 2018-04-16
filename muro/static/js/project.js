@@ -257,33 +257,44 @@ var ControlBar = function ControlBar(props) {
       'div',
       { className: 'cb-slider' },
       _react2.default.createElement(
-        'h2',
-        null,
-        'muro dashboard settings'
-      ),
-      _react2.default.createElement(
-        'label',
-        { htmlFor: 'cb-interval' },
-        'Interval:'
-      ),
-      _react2.default.createElement('input', {
-        className: 'cb-input',
-        type: 'number',
-        value: props.interval,
-        onChange: props.updateInterval,
-        name: 'cb-interval',
-        id: 'cb-interval'
-      }),
-      ' seconds',
-      _react2.default.createElement(
-        'button',
-        {
-          onClick: function onClick() {
-            return props.playPause();
+        'div',
+        { className: 'cb-setting' },
+        _react2.default.createElement(
+          'button',
+          {
+            onClick: function onClick() {
+              return props.playPause();
+            },
+            className: 'btn btn-playpause'
           },
-          className: 'btn btn-playpause'
-        },
-        props.paused ? 'Play' : 'Pause'
+          props.paused ? _react2.default.createElement(
+            'svg',
+            { className: 'icon icon-play' },
+            _react2.default.createElement('use', { xlinkHref: '#icon-play' })
+          ) : _react2.default.createElement(
+            'svg',
+            { className: 'icon icon-pause' },
+            _react2.default.createElement('use', { xlinkHref: '#icon-pause' })
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'cb-setting' },
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'cb-interval' },
+          'Interval:'
+        ),
+        _react2.default.createElement('input', {
+          className: 'cb-input',
+          type: 'number',
+          value: props.interval,
+          onChange: props.updateInterval,
+          name: 'cb-interval',
+          id: 'cb-interval'
+        }),
+        ' seconds'
       )
     )
   );
