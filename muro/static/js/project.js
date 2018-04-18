@@ -31,24 +31,73 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var DashBoardBrick = function (_React$Component) {
+  _inherits(DashBoardBrick, _React$Component);
+
+  function DashBoardBrick(props) {
+    _classCallCheck(this, DashBoardBrick);
+
+    var _this = _possibleConstructorReturn(this, (DashBoardBrick.__proto__ || Object.getPrototypeOf(DashBoardBrick)).call(this, props));
+
+    _this.state = {
+      iframeKey: 0,
+      refreshInterval: _this.props.brick.refreshInterval
+    };
+    return _this;
+  }
+
+  _createClass(DashBoardBrick, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.state.refreshInterval) {
+        this.refresh();
+      }
+    }
+  }, {
+    key: 'refresh',
+    value: function refresh() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState({
+          iframeKey: _this2.state.iframeKey + 1
+        });
+        _this2.refresh();
+      }, this.state.refreshInterval);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        {
+          className: "db-brick db-brick-" + this.props.brickCount,
+          style: {
+            backgroundColor: this.props.brick.color,
+            backgroundImage: this.props.brick.image && 'url("' + this.props.brick.image + '")'
+          }
+        },
+        this.props.brick.iframe ? _react2.default.createElement('iframe', { key: this.state.iframeKey, title: this.props.brick.name, src: this.props.brick.iframe, width: '100%', height: '100%' }) : ''
+      );
+    }
+  }]);
+
+  return DashBoardBrick;
+}(_react2.default.Component);
+
+;
+
 var DashBoardCol = function DashBoardCol(props) {
   var brickCount = props.bricks.length;
   return _react2.default.createElement(
     'div',
     { className: "db-col db-col-" + props.colCount },
     props.bricks.map(function (brick, i) {
-      return _react2.default.createElement(
-        'div',
-        {
-          key: i,
-          className: "db-brick db-brick-" + brickCount,
-          style: {
-            backgroundColor: brick.color,
-            backgroundImage: 'url("' + brick.image + '")'
-          }
-        },
-        brick.iframe ? _react2.default.createElement('iframe', { src: brick.iframe, width: '100%', height: '100%' }) : ''
-      );
+      return _react2.default.createElement(DashBoardBrick, {
+        key: i,
+        brick: brick,
+        brickCount: brickCount
+      });
     })
   );
 };
@@ -83,34 +132,34 @@ var DashBoard = function DashBoard(props) {
   );
 };
 
-var DashBoardWrapper = function (_React$Component) {
-  _inherits(DashBoardWrapper, _React$Component);
+var DashBoardWrapper = function (_React$Component2) {
+  _inherits(DashBoardWrapper, _React$Component2);
 
   function DashBoardWrapper(props) {
     _classCallCheck(this, DashBoardWrapper);
 
-    var _this = _possibleConstructorReturn(this, (DashBoardWrapper.__proto__ || Object.getPrototypeOf(DashBoardWrapper)).call(this, props));
+    var _this3 = _possibleConstructorReturn(this, (DashBoardWrapper.__proto__ || Object.getPrototypeOf(DashBoardWrapper)).call(this, props));
 
-    _this.state = {
+    _this3.state = {
       currentScreen: 0,
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
       paused: false
     };
-    _this.updateInterval = _this.updateInterval.bind(_this);
-    _this.playPause = _this.playPause.bind(_this);
-    return _this;
+    _this3.updateInterval = _this3.updateInterval.bind(_this3);
+    _this3.playPause = _this3.playPause.bind(_this3);
+    return _this3;
   }
 
   _createClass(DashBoardWrapper, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this4 = this;
 
       _axios2.default.get('json_feed/').then(function (res) {
-        var timer = setInterval(_this2.tick.bind(_this2), _this2.state.timerInterval * 1000);
-        _this2.setState({
+        var timer = setInterval(_this4.tick.bind(_this4), _this4.state.timerInterval * 1000);
+        _this4.setState({
           timer: timer,
           dashboards: res.data.dashboards
         });
@@ -182,7 +231,7 @@ var DashBoardWrapper = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
       if (this.state.dashboards) {
         return _react2.default.createElement(
@@ -195,7 +244,7 @@ var DashBoardWrapper = function (_React$Component) {
               key: db.id,
               order: i,
               db: db,
-              currentScreen: _this3.state.currentScreen
+              currentScreen: _this5.state.currentScreen
             });
           }),
           _react2.default.createElement(_controlbar2.default, {

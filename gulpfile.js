@@ -61,7 +61,7 @@ gulp.task('js-watch', ['javascript'], (done) => {
 
 // Run django server
 gulp.task('runServer', (cb) => {
-  const cmd = spawn('python', ['manage.py', 'runserver', '0.0.0.0:8002'], { stdio: 'inherit' });
+  const cmd = spawn('python', ['manage.py', 'runserver', '0.0.0.0:8003'], { stdio: 'inherit' });
   cmd.on('close', code => cb(code));
 });
 

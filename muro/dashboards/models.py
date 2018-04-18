@@ -6,6 +6,7 @@ class Brick(models.Model):
     color = models.CharField(blank=True, null=True, max_length=128)
     iframe = models.URLField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
+    refresh_interval = models.PositiveIntegerField(blank=True, null=True)
     # TODO: image (upload)
     # TODO: embed
 
@@ -88,6 +89,8 @@ class Muro(models.Model):
                     brick["color"] = bl.brick.color
                 if bl.brick.image_url:
                     brick["image"] = bl.brick.image_url
+                if bl.brick.refresh_interval:
+                    brick["refreshInterval"] = bl.brick.refresh_interval
                 col["bricks"].append(brick)
         return json
 

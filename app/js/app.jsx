@@ -7,21 +7,58 @@ import moment from 'moment';
 import ControlBar from './components/controlbar';
 
 
+class DashBoardBrick extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      iframeKey: 0,
+      refreshInterval: this.props.brick.refreshInterval,
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.refreshInterval) {
+      this.refresh();
+    }
+  }
+
+  refresh() {
+    setTimeout(() => {
+      this.setState({
+        iframeKey: this.state.iframeKey + 1,
+      });
+      this.refresh();
+    }, this.state.refreshInterval);
+  }
+
+  render() {
+    return (
+      <div
+        className={"db-brick db-brick-" + this.props.brickCount}
+        style={{
+          backgroundColor: this.props.brick.color,
+          backgroundImage: this.props.brick.image && 'url("' + this.props.brick.image + '")',
+        }}
+      >
+        {this.props.brick.iframe ?
+          <iframe key={this.state.iframeKey} title={this.props.brick.name} src={this.props.brick.iframe} width="100%" height="100%"/> : ''}
+      </div>
+    );
+  }
+};
+
+
 const DashBoardCol = (props) => {
   const brickCount = props.bricks.length;
   return (
     <div className={"db-col db-col-" + props.colCount}>
       { props.bricks.map((brick, i) => (
-        <div
+        <DashBoardBrick
           key={i}
-          className={"db-brick db-brick-" + brickCount}
-          style={{
-            backgroundColor: brick.color,
-            backgroundImage: 'url("' + brick.image + '")',
-          }}
-        >
-          { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
-        </div>
+          brick={brick}
+          brickCount={brickCount}
+        />
       ))}
     </div>
   );
@@ -143,7 +180,6 @@ class DashBoardWrapper extends React.Component {
       timerInterval: newInterval,
     });
   }
-
 
   render() {
     if (this.state.dashboards) {
