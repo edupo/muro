@@ -35,7 +35,7 @@ class DashBoardBrick extends React.Component {
   render() {
     return (
       <div
-        className={"db-brick db-brick-" + this.props.brickCount}
+        className={`db-brick db-brick-${this.props.brickCount} db-brick-img-${this.props.brick.imageStyle}`}
         style={{
           backgroundColor: this.props.brick.color,
           backgroundImage: this.props.brick.image && 'url("' + this.props.brick.image + '")',

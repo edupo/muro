@@ -65,7 +65,15 @@ body {
 .db-brick {
   height: 100%;
   width: 100%;
+}
+
+.db-brick-img-cover {
   background-size: cover;
+}
+
+.db-brick-img-centered {
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .db-brick-2 {

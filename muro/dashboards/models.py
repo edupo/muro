@@ -3,10 +3,17 @@ from multiselectfield import MultiSelectField
 
 
 class Brick(models.Model):
+    IMAGE_STYLE_CHOICES = (
+        ('cover', 'Cover'),
+        ('centered', 'Centered'),
+    )
     name = models.CharField(max_length=128)
     color = models.CharField(blank=True, null=True, max_length=128)
     iframe = models.URLField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
+    image_style = models.CharField(
+        choices=IMAGE_STYLE_CHOICES, default=IMAGE_STYLE_CHOICES[0][0],
+        max_length=128)
     refresh_interval = models.PositiveIntegerField(blank=True, null=True)
     # TODO: image (upload)
     # TODO: embed
@@ -101,6 +108,8 @@ class Muro(models.Model):
                     brick["color"] = bl.brick.color
                 if bl.brick.image_url:
                     brick["image"] = bl.brick.image_url
+                if bl.brick.image_style:
+                    brick["imageStyle"] = bl.brick.image_style
                 if bl.brick.refresh_interval:
                     brick["refreshInterval"] = bl.brick.refresh_interval
                 col["bricks"].append(brick)
