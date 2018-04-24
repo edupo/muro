@@ -47,6 +47,9 @@ class BrickLocation(models.Model):
     dashboard = models.ForeignKey(Dashboard, on_delete=models.CASCADE)
     brick = models.ForeignKey(Brick, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ('row_id', 'col_id',)
+
 
 class Muro(models.Model):
     title = models.CharField(max_length=128)
