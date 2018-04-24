@@ -194,18 +194,34 @@ var DashBoardWrapper = function (_React$Component2) {
     value: function rotateScreen() {
       var nextscreen = (this.state.currentScreen + 1) % this.state.dashboards.length;
       var looking = true;
+      var currentTime = (0, _moment2.default)();
       while (looking) {
-        if (this.state.dashboards[nextscreen].fromtime) {
-          var currentTime = (0, _moment2.default)();
-          var fromtime = (0, _moment2.default)(this.state.dashboards[nextscreen].fromtime, 'HH:mm:ss');
-          var totime = (0, _moment2.default)(this.state.dashboards[nextscreen].totime, 'HH:mm:ss');
-          if (!currentTime.isBetween(fromtime, totime)) {
+        /* We need to check two things for this dashboard:
+        1: is it active today?
+        2: is it active at this time?
+         We only need to check #2 is #1 is true.
+         */
+        var daysActive = this.state.dashboards[nextscreen].daysActive;
+        var activeToday = true;
+        if (daysActive.length > 0) {
+          var today = (0, _moment2.default)().format('E').toString();
+          if (!daysActive.includes(today)) {
+            activeToday = false;
             nextscreen = (nextscreen + 1) % this.state.dashboards.length;
+          }
+        }
+        if (activeToday) {
+          if (this.state.dashboards[nextscreen].fromtime) {
+            var fromtime = (0, _moment2.default)(this.state.dashboards[nextscreen].fromtime, 'HH:mm:ss');
+            var totime = (0, _moment2.default)(this.state.dashboards[nextscreen].totime, 'HH:mm:ss');
+            if (!currentTime.isBetween(fromtime, totime)) {
+              nextscreen = (nextscreen + 1) % this.state.dashboards.length;
+            } else {
+              looking = false;
+            }
           } else {
             looking = false;
           }
-        } else {
-          looking = false;
         }
       }
       this.setState({

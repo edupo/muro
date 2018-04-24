@@ -64,6 +64,7 @@ class Muro(models.Model):
             dashboard = {
                 "id": db.id, "rows": [],
                 "fromtime": db.fromtime, "totime": db.totime,
+                "daysActive": db.days_active
             }
             json["dashboards"].append(dashboard)
             # Loop through the locations and see if rows and cols already exist, starting with rows.
