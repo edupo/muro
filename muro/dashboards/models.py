@@ -15,8 +15,8 @@ class Brick(models.Model):
         choices=IMAGE_STYLE_CHOICES, default=IMAGE_STYLE_CHOICES[0][0],
         max_length=128)
     refresh_interval = models.PositiveIntegerField(blank=True, null=True)
+    embed = models.TextField(blank=True, null=True)
     # TODO: image (upload)
-    # TODO: embed
 
     def __str__(self):
         return self.name
@@ -115,6 +115,8 @@ class Muro(models.Model):
                     brick["imageStyle"] = bl.brick.image_style
                 if bl.brick.refresh_interval:
                     brick["refreshInterval"] = bl.brick.refresh_interval
+                if bl.brick.embed:
+                    brick["embed"] = bl.brick.embed
                 col["bricks"].append(brick)
         return json
 

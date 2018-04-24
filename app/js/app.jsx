@@ -41,8 +41,9 @@ class DashBoardBrick extends React.Component {
           backgroundImage: this.props.brick.image && 'url("' + this.props.brick.image + '")',
         }}
       >
-        {this.props.brick.iframe ?
-          <iframe key={this.state.iframeKey} title={this.props.brick.name} src={this.props.brick.iframe} width="100%" height="100%"/> : ''}
+        {this.props.brick.iframe &&
+          <iframe key={this.state.iframeKey} title={this.props.brick.name} src={this.props.brick.iframe} width="100%" height="100%"/>}
+        {this.props.brick.embed && <div className="db-brick-embed" dangerouslySetInnerHTML={{ __html: this.props.brick.embed }} />}
       </div>
     );
   }
