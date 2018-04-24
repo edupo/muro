@@ -1,21 +1,41 @@
 from django.db import models
+from multiselectfield import MultiSelectField
 
 
 class Brick(models.Model):
+    IMAGE_STYLE_CHOICES = (
+        ('cover', 'Cover'),
+        ('centered', 'Centered'),
+    )
     name = models.CharField(max_length=128)
     color = models.CharField(blank=True, null=True, max_length=128)
     iframe = models.URLField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
+    image_style = models.CharField(
+        choices=IMAGE_STYLE_CHOICES, default=IMAGE_STYLE_CHOICES[0][0],
+        max_length=128)
+    refresh_interval = models.PositiveIntegerField(blank=True, null=True)
+    embed = models.TextField(blank=True, null=True)
     # TODO: image (upload)
-    # TODO: embed
 
     def __str__(self):
         return self.name
 
 
 class Dashboard(models.Model):
+    DAYS = (
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday'),
+        (7, 'Sunday'),
+    )
     title = models.CharField(max_length=128)
-    # TODO: fromtime, totime (models.TimeField(input_formats=("%H:%i"))?)
+    fromtime = models.TimeField(blank=True, null=True)
+    totime = models.TimeField(blank=True, null=True)
+    days_active = MultiSelectField(choices=DAYS, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -26,6 +46,9 @@ class BrickLocation(models.Model):
     col_id = models.IntegerField()
     dashboard = models.ForeignKey(Dashboard, on_delete=models.CASCADE)
     brick = models.ForeignKey(Brick, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('row_id', 'col_id',)
 
 
 class Muro(models.Model):
@@ -48,7 +71,11 @@ class Muro(models.Model):
         }
 
         for db in self.dashboards.all():
-            dashboard = {"id": db.id, "rows": []}
+            dashboard = {
+                "id": db.id, "rows": [],
+                "fromtime": db.fromtime, "totime": db.totime,
+                "daysActive": db.days_active
+            }
             json["dashboards"].append(dashboard)
             # Loop through the locations and see if rows and cols already exist, starting with rows.
             for bl in db.bricklocation_set.all():
@@ -84,6 +111,12 @@ class Muro(models.Model):
                     brick["color"] = bl.brick.color
                 if bl.brick.image_url:
                     brick["image"] = bl.brick.image_url
+                if bl.brick.image_style:
+                    brick["imageStyle"] = bl.brick.image_style
+                if bl.brick.refresh_interval:
+                    brick["refreshInterval"] = bl.brick.refresh_interval
+                if bl.brick.embed:
+                    brick["embed"] = bl.brick.embed
                 col["bricks"].append(brick)
         return json
 

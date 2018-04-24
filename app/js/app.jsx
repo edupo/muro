@@ -2,8 +2,52 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 import ControlBar from './components/controlbar';
+
+
+class DashBoardBrick extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      iframeKey: 0,
+      refreshInterval: this.props.brick.refreshInterval,
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.refreshInterval) {
+      this.refresh();
+    }
+  }
+
+  refresh() {
+    setTimeout(() => {
+      this.setState({
+        iframeKey: this.state.iframeKey + 1,
+      });
+      this.refresh();
+    }, this.state.refreshInterval);
+  }
+
+  render() {
+    return (
+      <div
+        className={`db-brick db-brick-${this.props.brickCount} db-brick-img-${this.props.brick.imageStyle}`}
+        style={{
+          backgroundColor: this.props.brick.color,
+          backgroundImage: this.props.brick.image && 'url("' + this.props.brick.image + '")',
+        }}
+      >
+        {this.props.brick.iframe &&
+          <iframe key={this.state.iframeKey} title={this.props.brick.name} src={this.props.brick.iframe} width="100%" height="100%"/>}
+        {this.props.brick.embed && <div className="db-brick-embed" dangerouslySetInnerHTML={{ __html: this.props.brick.embed }} />}
+      </div>
+    );
+  }
+};
 
 
 const DashBoardCol = (props) => {
@@ -11,16 +55,11 @@ const DashBoardCol = (props) => {
   return (
     <div className={"db-col db-col-" + props.colCount}>
       { props.bricks.map((brick, i) => (
-        <div
+        <DashBoardBrick
           key={i}
-          className={"db-brick db-brick-" + brickCount}
-          style={{
-            backgroundColor: brick.color,
-            backgroundImage: 'url("' + brick.image + '")',
-          }}
-        >
-          { brick.iframe ? <iframe src={brick.iframe} width="100%" height="100%" /> : '' }
-        </div>
+          brick={brick}
+          brickCount={brickCount}
+        />
       ))}
     </div>
   );
@@ -66,9 +105,10 @@ class DashBoardWrapper extends React.Component {
       timer: null,
       dashboards: undefined,
       timerInterval: 10,
-      showControlBar: false,
+      paused: false,
     };
     this.updateInterval = this.updateInterval.bind(this);
+    this.playPause = this.playPause.bind(this);
   }
 
   componentDidMount() {
@@ -89,9 +129,59 @@ class DashBoardWrapper extends React.Component {
     }
   }
 
+  playPause() {
+    if (this.state.timer) {
+      clearInterval(this.state.timer);
+      this.setState({
+        timer: null,
+        paused: true,
+      });
+    } else {
+      const timer = setInterval(this.tick.bind(this), this.state.timerInterval * 1000);
+      this.setState({
+        timer,
+        paused: false,
+      });
+    }
+  }
+
   rotateScreen() {
+    let nextscreen = (this.state.currentScreen + 1) % this.state.dashboards.length;
+    let looking = true;
+    const currentTime = moment();
+    while (looking) {
+      /* We need to check two things for this dashboard:
+      1: is it active today?
+      2: is it active at this time?
+
+      We only need to check #2 is #1 is true.
+       */
+      const daysActive = this.state.dashboards[nextscreen].daysActive;
+      let activeToday = true;
+      if (daysActive.length > 0) {
+        const today = moment().format('E').toString();
+        if (!daysActive.includes(today)) {
+          activeToday = false;
+          nextscreen = (nextscreen + 1) % this.state.dashboards.length;
+        }
+      }
+      if (activeToday) {
+        if (this.state.dashboards[nextscreen].fromtime) {
+          const fromtime = moment(this.state.dashboards[nextscreen].fromtime, 'HH:mm:ss');
+          const totime = moment(this.state.dashboards[nextscreen].totime, 'HH:mm:ss');
+          if (!currentTime.isBetween(fromtime, totime)) {
+            nextscreen = (nextscreen + 1) % this.state.dashboards.length;
+          } else {
+            looking = false;
+          }
+        }
+        else {
+          looking = false;
+        }
+      }
+    }
     this.setState({
-      currentScreen: (this.state.currentScreen + 1) % this.state.dashboards.length,
+      currentScreen: nextscreen,
     });
   }
 
@@ -109,7 +199,6 @@ class DashBoardWrapper extends React.Component {
     });
   }
 
-
   render() {
     if (this.state.dashboards) {
       return (
@@ -124,23 +213,11 @@ class DashBoardWrapper extends React.Component {
               currentScreen={this.state.currentScreen}
             />
           ))}
-          <button
-            className="cb-toggler"
-            href="#"
-            onClick={() => this.setState({ showControlBar: !this.state.showControlBar })}
-          >
-            <svg
-              className="icon icon-cog"
-            >
-              <use
-                xlinkHref="#icon-cog"
-              />
-            </svg>
-          </button>
           <ControlBar
             interval={this.state.timerInterval}
             updateInterval={this.updateInterval}
-            show={this.state.showControlBar}
+            playPause={this.playPause}
+            paused={this.state.paused}
           />
         </div>
       );

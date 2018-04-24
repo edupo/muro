@@ -52,6 +52,20 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif; }
 
+.btn {
+  border: 0;
+  background: #fff;
+  padding: 5px 10px; }
+
+.btn-playpause {
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100px;
+  font-weight: bold; }
+  .btn-playpause:active {
+    color: purple; }
+
 .db {
   height: 100vh;
   width: 100%;
@@ -82,11 +96,22 @@ body {
 
 .db-brick {
   height: 100%;
-  width: 100%;
+  width: 100%; }
+
+.db-brick-img-cover {
   background-size: cover; }
+
+.db-brick-img-centered {
+  background-repeat: no-repeat;
+  background-position: center; }
 
 .db-brick-2 {
   height: 50%; }
+
+.db-brick-embed {
+  width: 100%;
+  height: 100%;
+  text-align: center; }
 
 .db-absolute {
   position: absolute;
@@ -100,29 +125,26 @@ body {
   opacity: 0; }
 
 .cb {
-  box-sizing: border-box;
-  padding: 20px 20px 20px 80px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  width: 100%;
   position: absolute;
   bottom: 0;
-  left: 0;
+  width: 100%;
+  height: 100px;
+  opacity: 0;
   font-size: 20px;
-  opacity: 1;
-  transition: bottom 1s, opacity 1s;
-  z-index: 100; }
-  .cb.is-hidden {
-    bottom: -150px;
-    opacity: 0; }
-    .cb.is-hidden:hover {
-      bottom: 0; }
+  z-index: 100;
+  padding: 20px 20px 20px 80px;
+  transition: 0.7s opacity;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  box-shadow: 2px 4px 10px #000; }
+  .cb:hover {
+    opacity: 1; }
 
 .cb-input {
   color: #fff;
   border: 1px solid #666;
   background: none;
-  font-size: 20px;
+  font-size: 40px;
   width: 140px;
   text-align: right;
   margin-left: 10px; }
@@ -143,6 +165,10 @@ body {
   padding: 8px 10px 4px; }
   .cb-toggler:hover {
     opacity: 1; }
+
+.cb-setting {
+  float: left;
+  padding: 20px; }
 
 .icon {
   display: inline-block;
