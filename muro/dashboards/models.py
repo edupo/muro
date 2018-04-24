@@ -1,4 +1,5 @@
 from django.db import models
+from multiselectfield import MultiSelectField
 
 
 class Brick(models.Model):
@@ -15,9 +16,19 @@ class Brick(models.Model):
 
 
 class Dashboard(models.Model):
+    DAYS = (
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday'),
+        (7, 'Sunday'),
+    )
     title = models.CharField(max_length=128)
     fromtime = models.TimeField(blank=True, null=True)
     totime = models.TimeField(blank=True, null=True)
+    days_active = MultiSelectField(choices=DAYS, blank=True, null=True)
 
     def __str__(self):
         return self.title
